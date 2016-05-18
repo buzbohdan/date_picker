@@ -12,6 +12,9 @@
       var monthNames = ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
       ];
+      var monthNamesShort = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul',
+        'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+      ];
 
       function daysInMonth(month, year) {
         return new Date(year, month, 0).getDate();
@@ -36,6 +39,10 @@
           this.setState({"day": day})
         },
 
+        setSelectedMonth: function(month) {
+          this.setState({"month": month})
+        },
+
         render: function() {
           return (
             <div className="dateSelector">
@@ -46,13 +53,21 @@
                 setSelectedView={this.setSelectedView}
               />
               {
-                this.state.selectedView === "day" ? <DaySelector
-                  setSelectedDay={this.setSelectedDay}
-                  day={this.state.day}
-                  month={this.state.month}
-                  year={this.state.year} /> : null
+                this.state.selectedView === "day" ?
+                  <DaySelector
+                    setSelectedDay={this.setSelectedDay}
+                    day={this.state.day}
+                    month={this.state.month}
+                    year={this.state.year}
+                  /> : null
               }
-              { this.state.selectedView === "month" ? <MonthSelector /> : null }
+              {
+                this.state.selectedView === "month" ?
+                  <MonthSelector
+                    month={this.state.month}
+                    setSelectedMonth={this.setSelectedMonth}
+                  /> : null
+              }
               { this.state.selectedView === "year" ? <YearSelector /> : null }
             </div>
           );
@@ -117,16 +132,37 @@
           return (
             <div>
               <div> === Day === </div>
-              <div>{days}</div>
+              {days}
             </div>
           );
         }
       });
 
-      var MonthSelector = React.createClass({
+      var MonthLabel = React.createClass({
+        setSelectedMonth: function() {
+          this.props.setSelectedMonth(this.props.month)
+        },
+
         render: function() {
           return (
-            <div> this is mont selector </div>
+            <div onClick={this.setSelectedMonth}> {this.props.selected ? "selected" : null} {monthNamesShort[this.props.month]}</div>
+          )
+        }
+      })
+
+      var MonthSelector = React.createClass({
+        render: function() {
+          var months = []
+          for (var i=0; i<monthNamesShort.length; i++){
+            months.push(
+              <MonthLabel month={i} key={i} selected={i==this.props.month} setSelectedMonth={this.props.setSelectedMonth}/>
+            );
+          }
+          return (
+            <div>
+              <div> === Month === </div>
+              {months}
+            </div>
           );
         }
       });
