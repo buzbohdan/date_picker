@@ -12,6 +12,11 @@
       var monthNames = ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
       ];
+
+      function daysInMonth(month, year) {
+        return new Date(year, month, 0).getDate();
+      } 
+
       var DateSelector = React.createClass({
         getInitialState: function() {
           var today = new Date();
@@ -27,6 +32,10 @@
           this.setState({"selectedView": view});
         },
 
+        setSelectedDay: function(day) {
+          this.setState({"day": day})
+        },
+
         render: function() {
           return (
             <div className="dateSelector">
@@ -36,7 +45,13 @@
                 year={this.state.year}
                 setSelectedView={this.setSelectedView}
               />
-              { this.state.selectedView === "day" ? <DaySelector /> : null }
+              {
+                this.state.selectedView === "day" ? <DaySelector
+                  setSelectedDay={this.setSelectedDay}
+                  day={this.state.day}
+                  month={this.state.month}
+                  year={this.state.year} /> : null
+              }
               { this.state.selectedView === "month" ? <MonthSelector /> : null }
               { this.state.selectedView === "year" ? <YearSelector /> : null }
             </div>
@@ -74,10 +89,36 @@
         }
       });
 
-      var DaySelector = React.createClass({
+      var DayLabel = React.createClass({
+        setSelectedDay: function() {
+          this.props.setSelectedDay(this.props.day)
+        },
+
         render: function() {
           return (
-            <div> this is day view </div>
+            <div onClick={this.setSelectedDay}> {this.props.selected ? "selected" : null} {this.props.day}</div>
+          )
+        }
+      })
+
+      var DaySelector = React.createClass({
+        render: function() {
+          var days = []
+          for (var i=1; i<daysInMonth(this.props.month + 1, this.props.year) + 1; i++){
+            days.push(
+              <DayLabel
+                day={i}
+                selected={this.props.day == i}
+                setSelectedDay={this.props.setSelectedDay}
+                key={i}
+              />
+            )
+          }
+          return (
+            <div>
+              <div> === Day === </div>
+              <div>{days}</div>
+            </div>
           );
         }
       });
