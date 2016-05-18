@@ -30,18 +30,18 @@
         render: function() {
           return (
             <div className="dateSelector">
-	      <SelectedDateHeader
-		 day={this.state.day}
-		 monthName={this.state.monthName}
-		 year={this.state.year}
-		 setSelectedView={this.setSelectedView}
-	      />
-              { this.state.selectedView === "day" ? <DaySelector /> : null }
-              { this.state.selectedView === "month" ? <MonthSelector /> : null }
-              { this.state.selectedView === "year" ? <YearSelector /> : null }
-	    </div>
-	  );
-	}
+            <SelectedDateHeader
+              day={this.state.day}
+              monthName={this.state.monthName}
+              year={this.state.year}
+              setSelectedView={this.setSelectedView}
+            />
+            { this.state.selectedView === "day" ? <DaySelector /> : null }
+            { this.state.selectedView === "month" ? <MonthSelector /> : null }
+            { this.state.selectedView === "year" ? <YearSelector /> : null }
+            </div>
+          );
+        }
       });
 
       var SelectedDateHeader = React.createClass({
@@ -58,40 +58,40 @@
         },
 
         render: function() {
-	  return (
-	    <div className="selectedDateHeader">
-	      <div onClick={this.handleDayClick}>
-		{this.props.day}
+          return (
+            <div className="selectedDateHeader">
+              <div onClick={this.handleDayClick}>
+          {this.props.day}
+                    </div>
+              <div onClick={this.handleMonthClick}>
+          {this.props.monthName}
               </div>
-	      <div onClick={this.handleMonthClick}>
-		{this.props.monthName}
-	      </div>
-              <div onClick={this.handleYearClick}>
-		{this.props.year}
-	      </div>
-	    </div>
-	  );
-	}
+                    <div onClick={this.handleYearClick}>
+          {this.props.year}
+              </div>
+            </div>
+          );
+        }
       });
 
       var DaySelector = React.createClass({
-	render: function() {
-	  return (
-	    <div> this is day view </div>
-	  );
-	}
+        render: function() {
+          return (
+            <div> this is day view </div>
+          );
+        }
       });
 
       var MonthSelector = React.createClass({
-	render: function() {
-	  return (
-	    <div> this is mont selector </div>
-	  );
-	}
+        render: function() {
+          return (
+            <div> this is mont selector </div>
+          );
+        }
       });
 
       var YearSelector = React.createClass({
-	render: function() {
+        render: function() {
           return (
             <div> this is year view </div>
           );
@@ -100,9 +100,8 @@
 
       ReactDOM.render(
         <DateSelector />,
-	document.getElementById('content')
+        document.getElementById('content')
       );
     </script>
   </body>
 </html>
-      
