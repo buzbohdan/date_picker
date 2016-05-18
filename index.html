@@ -30,15 +30,15 @@
         render: function() {
           return (
             <div className="dateSelector">
-            <SelectedDateHeader
-              day={this.state.day}
-              month={this.state.month}
-              year={this.state.year}
-              setSelectedView={this.setSelectedView}
-            />
-            { this.state.selectedView === "day" ? <DaySelector /> : null }
-            { this.state.selectedView === "month" ? <MonthSelector /> : null }
-            { this.state.selectedView === "year" ? <YearSelector /> : null }
+              <SelectedDateHeader
+                day={this.state.day}
+                month={this.state.month}
+                year={this.state.year}
+                setSelectedView={this.setSelectedView}
+              />
+              { this.state.selectedView === "day" ? <DaySelector /> : null }
+              { this.state.selectedView === "month" ? <MonthSelector /> : null }
+              { this.state.selectedView === "year" ? <YearSelector /> : null }
             </div>
           );
         }
