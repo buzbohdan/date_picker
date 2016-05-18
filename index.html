@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Date Picker</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.0.2/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.0.2/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+  </head>
+  <body>
+    <div id="content"></div>
+    <script type="text/babel">
+      var DateSelector = React.createClass({
+        render: function() {
+          return (
+            <div className="dateSelector">
+	      Hello, I'm in react!
+	    </div>
+	  );
+	}
+      });
+      ReactDOM.render(
+        <DateSelector />,
+	document.getElementById('content')
+      );
+    </script>
+  </body>
+</html>
+      
