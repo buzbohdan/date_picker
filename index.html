@@ -43,6 +43,10 @@
           this.setState({"month": month})
         },
 
+        setSelectedYear: function(year) {
+          this.setState({"year": year})
+        },
+
         render: function() {
           return (
             <div className="dateSelector">
@@ -68,7 +72,13 @@
                     setSelectedMonth={this.setSelectedMonth}
                   /> : null
               }
-              { this.state.selectedView === "year" ? <YearSelector /> : null }
+              {
+                this.state.selectedView === "year" ?
+                  <YearSelector 
+                    year={this.state.year}
+                    setSelectedYear={this.setSelectedYear}
+                  /> : null
+              }
             </div>
           );
         }
@@ -167,10 +177,33 @@
         }
       });
 
-      var YearSelector = React.createClass({
+      var YearLabel = React.createClass({
+        setSelectedYear: function() {
+          this.props.setSelectedYear(this.props.year)
+        },
+
         render: function() {
           return (
-            <div> this is year view </div>
+            <div onClick={this.setSelectedYear}> {this.props.selected ? "selected" : null} {this.props.year}</div>
+          )
+        }
+      })
+
+      var YearSelector = React.createClass({
+        render: function() {
+          var years = []
+          var yearsOnPage = 10;
+          var startYear = Math.floor(this.props.year / yearsOnPage) * yearsOnPage;
+          for (var i=startYear; i < startYear + yearsOnPage; i++){
+            years.push(
+              <YearLabel year={i} key={i} selected={i==this.props.year} setSelectedYear={this.props.setSelectedYear}/>
+            )
+          }
+          return (
+            <div>
+              <div> === Year === </div>
+              {years}
+            </div>
           );
         }
       });
