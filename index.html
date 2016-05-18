@@ -9,15 +9,39 @@
   <body>
     <div id="content"></div>
     <script type="text/babel">
+      var monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+      ];
       var DateSelector = React.createClass({
+        getInitialState: function() {
+          var today = new Date();
+          return {
+            day: today.getDate(),
+            monthName: monthNames[today.getMonth()],
+            year: today.getFullYear()
+          };
+        },
         render: function() {
           return (
             <div className="dateSelector">
-	      Hello, I'm in react!
+	      <SelectedDateHeader day={this.state.day} monthName={this.state.monthName} year={this.state.year}/>
 	    </div>
 	  );
 	}
       });
+
+      var SelectedDateHeader = React.createClass({
+        render: function() {
+	  return (
+	    <div className="selectedDateHeader">
+	      {this.props.day}
+	      {this.props.monthName}
+	      {this.props.year}
+	    </div>
+	  );
+	}
+      });
+
       ReactDOM.render(
         <DateSelector />,
 	document.getElementById('content')
