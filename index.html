@@ -17,7 +17,7 @@
           var today = new Date();
           return {
             day: today.getDate(),
-            monthName: monthNames[today.getMonth()],
+            month: today.getMonth(),
             year: today.getFullYear(),
             selectedView: "day"
           };
@@ -32,7 +32,7 @@
             <div className="dateSelector">
             <SelectedDateHeader
               day={this.state.day}
-              monthName={this.state.monthName}
+              month={this.state.month}
               year={this.state.year}
               setSelectedView={this.setSelectedView}
             />
@@ -61,13 +61,13 @@
           return (
             <div className="selectedDateHeader">
               <div onClick={this.handleDayClick}>
-          {this.props.day}
-                    </div>
-              <div onClick={this.handleMonthClick}>
-          {this.props.monthName}
+                {this.props.day}
               </div>
-                    <div onClick={this.handleYearClick}>
-          {this.props.year}
+              <div onClick={this.handleMonthClick}>
+                {monthNames[this.props.month]}
+              </div>
+              <div onClick={this.handleYearClick}>
+                {this.props.year}
               </div>
             </div>
           );
