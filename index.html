@@ -88,6 +88,7 @@
                   <ViewMonthSelector
                     month={this.state.month}
                     setViewMonth={this.setViewMonth}
+                    setSelectedView={this.setSelectedView}
                   /> : null
               }
               {
@@ -203,7 +204,8 @@
 
       var MonthLabel = React.createClass({
         setViewMonth: function() {
-          this.props.setViewMonth(this.props.month)
+          this.props.setViewMonth(this.props.month);
+          this.props.setSelectedView("day");
         },
 
         render: function() {
@@ -218,7 +220,13 @@
           var months = []
           for (var i=0; i<monthNamesShort.length; i++){
             months.push(
-              <MonthLabel month={i} key={i} selected={i==this.props.month} setViewMonth={this.props.setViewMonth}/>
+              <MonthLabel
+                month={i}
+                key={i}
+                selected={i==this.props.month}
+                setViewMonth={this.props.setViewMonth}
+                setSelectedView={this.props.setSelectedView}
+              />
             );
           }
           return (
