@@ -242,11 +242,15 @@
           this.props.setSwitcherYear(this.props.switcherYear + 1);
         },
 
+        handleYearClick: function(){
+          this.props.setSelectedView("year");
+        },
+
         render: function() {
           return (
             <div>
               <div onClick={this.switchToPreviousYear}> left </div>
-              <div> {this.props.switcherYear} </div>
+              <div onClick={this.handleYearClick}> {this.props.switcherYear} </div>
               <div onClick={this.switchToNextYear}> right </div>
             </div>
           )
@@ -282,7 +286,11 @@
           return (
             <div>
               <div> === Month === </div>
-              <YearSwitcher switcherYear={this.state.switcherYear} setSwitcherYear={this.setSwitcherYear}/>
+              <YearSwitcher
+                switcherYear={this.state.switcherYear}
+                setSwitcherYear={this.setSwitcherYear}
+                setSelectedView={this.props.setSelectedView} 
+              />
               {months}
             </div>
           );
