@@ -17,7 +17,7 @@
       ];
 
       function daysInMonth(month, year) {
-        return new Date(year, month, 0).getDate();
+        return new Date(Date.UTC(year, month + 1, 0)).getDate();
       } 
 
       var DateSelector = React.createClass({
@@ -38,7 +38,7 @@
         },
 
         setSelectedDate: function(day, month, year) {
-          this.setState({"day": day, "month": month, "year": year})
+          this.setState({"day": day, "month": month, "year": year, "viewMonth": month, "viewYear": year})
         },
 
         setSelectedDay: function(day) {
@@ -190,8 +190,37 @@
 
       var DaySelector = React.createClass({
         render: function() {
+          var firstDayOfMonth = new Date(Date.UTC(this.props.viewYear, this.props.viewMonth, 1));
+          var lastDayOfMonth = new Date(Date.UTC(this.props.viewYear, this.props.viewMonth + 1, 0));
+          var lastDayOfPreviousMonth = new Date(Date.UTC(this.props.viewYear, this.props.viewMonth, 0))
+          var daysInPreviousMonth = lastDayOfPreviousMonth.getDate();
+          var previousMonth = lastDayOfPreviousMonth.getMonth()
+          var previousYear = lastDayOfPreviousMonth.getFullYear()
+
+          var firstDayOfNextMonth = new Date(Date.UTC(this.props.viewYear, this.props.viewMonth + 1, 1))
+          var nextMonth = firstDayOfNextMonth.getMonth()
+          var nextYear = firstDayOfNextMonth.getFullYear()
+
+          var day, selected;
           var days = []
-          for (var i=1; i<daysInMonth(this.props.viewMonth + 1, this.props.viewYear) + 1; i++){
+          for (var i=0; i<firstDayOfMonth.getDay(); i++){
+            day = daysInPreviousMonth - i
+            selected = (
+              this.props.day == day && this.props.month == previousMonth && this.props.year == previousYear
+            )
+            days.unshift(
+              <DayLabel
+                day={day}
+                month={previousMonth}
+                year={previousYear}
+                selected={selected}
+                setSelectedDate={this.props.setSelectedDate}
+                key={100 + i}
+              />
+            )
+          }
+
+          for (var i=1; i<daysInMonth(this.props.viewMonth, this.props.viewYear) + 1; i++){
             days.push(
               <DayLabel
                 day={i}
@@ -203,6 +232,24 @@
               />
             )
           }
+
+          for (var i=1; i < 7 - lastDayOfMonth.getDay(); i++){
+            day = i
+            selected = (
+              this.props.day == day && this.props.month == nextMonth && this.props.year == nextYear
+            )
+            days.push(
+              <DayLabel
+                day={day}
+                month={nextMonth}
+                year={nextYear}
+                selected={selected}
+                setSelectedDate={this.props.setSelectedDate}
+                key={1000 + i}
+              />
+            )
+          }
+
           return (
             <div>
               <div> === Day === </div>
