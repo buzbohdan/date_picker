@@ -96,6 +96,7 @@
                   <ViewYearSelector 
                     year={this.state.year}
                     setViewYear={this.setViewYear}
+                    setSelectedView={this.setSelectedView}
                   /> : null
               }
             </div>
@@ -240,7 +241,8 @@
 
       var YearLabel = React.createClass({
         setViewYear: function() {
-          this.props.setViewYear(this.props.year)
+          this.props.setViewYear(this.props.year);
+          this.props.setSelectedView("month");
         },
 
         render: function() {
@@ -257,7 +259,13 @@
           var startYear = Math.floor(this.props.year / yearsOnPage) * yearsOnPage;
           for (var i=startYear; i < startYear + yearsOnPage; i++){
             years.push(
-              <YearLabel year={i} key={i} selected={i==this.props.year} setViewYear={this.props.setViewYear}/>
+              <YearLabel
+                year={i}
+                key={i}
+                selected={i==this.props.year}
+                setViewYear={this.props.setViewYear}
+                setSelectedView={this.props.setSelectedView}
+              />
             )
           }
           return (
