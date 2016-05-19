@@ -252,12 +252,43 @@
         }
       })
 
-      var ViewYearSelector = React.createClass({
+      var YearRangeSwitcher = React.createClass({
+        switchToPreviousRange: function() {
+          this.props.setStartYear(this.props.startYear - this.props.yearsOnPage);
+        },
+
+        switchToNextRange: function() {
+          this.props.setStartYear(this.props.startYear + this.props.yearsOnPage);
+        },
+
         render: function() {
-          var years = []
+          return (
+            <div>
+              <div onClick={this.switchToPreviousRange}> left </div>
+              <div> {this.props.startYear} - {this.props.startYear + this.props.yearsOnPage - 1} </div>
+              <div onClick={this.switchToNextRange}> right </div>
+            </div>
+          )
+        }
+      });
+
+      var ViewYearSelector = React.createClass({
+        getInitialState: function() {
           var yearsOnPage = 10;
           var startYear = Math.floor(this.props.year / yearsOnPage) * yearsOnPage;
-          for (var i=startYear; i < startYear + yearsOnPage; i++){
+          return {
+            "yearsOnPage": yearsOnPage,
+            "startYear": startYear
+          };
+        },
+
+        setStartYear: function(startYear){
+          this.setState({"startYear": startYear})
+        },
+
+        render: function() {
+          var years = []
+          for (var i=this.state.startYear; i < this.state.startYear + this.state.yearsOnPage; i++){
             years.push(
               <YearLabel
                 year={i}
@@ -271,6 +302,11 @@
           return (
             <div>
               <div> === Year === </div>
+              <YearRangeSwitcher
+                startYear={this.state.startYear}
+                yearsOnPage={this.state.yearsOnPage}
+                setStartYear={this.setStartYear}
+              />
               {years}
             </div>
           );
