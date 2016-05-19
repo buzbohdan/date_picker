@@ -79,18 +79,20 @@
                     year={this.state.year}
                     viewMonth={this.state.viewMonth}
                     viewYear={this.state.viewYear}
+                    setViewMonth={this.setViewMonth}
+                    setViewYear={this.setViewYear}
                   /> : null
               }
               {
                 this.state.selectedView === "month" ?
-                  <MonthSelector
+                  <ViewMonthSelector
                     month={this.state.month}
                     setViewMonth={this.setViewMonth}
                   /> : null
               }
               {
                 this.state.selectedView === "year" ?
-                  <YearSelector 
+                  <ViewYearSelector 
                     year={this.state.year}
                     setViewYear={this.setViewYear}
                   /> : null
@@ -132,7 +134,7 @@
 
       var DayLabel = React.createClass({
         setSelectedDate: function() {
-          this.props.setSelectedDate(this.props.day, this.props.month, this.props.year)
+          this.props.setSelectedDate(this.props.day, this.props.month, this.props.year);
         },
 
         render: function() {
@@ -141,6 +143,33 @@
           )
         }
       })
+
+      var MonthSwitcher = React.createClass({
+        updateViewMonthAndYear: function(monthDate) {
+          this.props.setViewMonth(monthDate.getMonth());
+          this.props.setViewYear(monthDate.getFullYear());
+        },
+
+        switchToPreviousMonth: function() {
+          var previousMonthDate = new Date(this.props.viewYear, this.props.viewMonth - 1, 1);
+          this.updateViewMonthAndYear(previousMonthDate);
+        },
+
+        switchToNextMonth: function() {
+          var nextMonthDate = new Date(this.props.viewYear, this.props.viewMonth + 1, 1);
+          this.updateViewMonthAndYear(nextMonthDate);
+        },
+
+        render: function() {
+          return (
+            <div>
+              <div onClick={this.switchToPreviousMonth}> left </div>
+              <div> {monthNames[this.props.viewMonth]} {this.props.viewYear} </div>
+              <div onClick={this.switchToNextMonth}> right </div>
+            </div>
+          )
+        }
+      });
 
       var DaySelector = React.createClass({
         render: function() {
@@ -160,6 +189,12 @@
           return (
             <div>
               <div> === Day === </div>
+              <MonthSwitcher
+                viewMonth={this.props.viewMonth}
+                viewYear={this.props.viewYear}
+                setViewMonth={this.props.setViewMonth}
+                setViewYear={this.props.setViewYear}
+              />
               {days}
             </div>
           );
@@ -178,7 +213,7 @@
         }
       })
 
-      var MonthSelector = React.createClass({
+      var ViewMonthSelector = React.createClass({
         render: function() {
           var months = []
           for (var i=0; i<monthNamesShort.length; i++){
@@ -207,7 +242,7 @@
         }
       })
 
-      var YearSelector = React.createClass({
+      var ViewYearSelector = React.createClass({
         render: function() {
           var years = []
           var yearsOnPage = 10;
