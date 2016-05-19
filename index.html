@@ -87,7 +87,9 @@
                 this.state.selectedView === "month" ?
                   <ViewMonthSelector
                     month={this.state.month}
+                    year={this.state.year}
                     setViewMonth={this.setViewMonth}
+                    setViewYear={this.setViewYear}
                     setSelectedView={this.setSelectedView}
                   /> : null
               }
@@ -206,6 +208,7 @@
       var MonthLabel = React.createClass({
         setViewMonth: function() {
           this.props.setViewMonth(this.props.month);
+          this.props.setViewYear(this.props.selectedYear);
           this.props.setSelectedView("day");
         },
 
@@ -216,7 +219,37 @@
         }
       })
 
+      var YearSwitcher = React.createClass({
+        switchToPreviousYear: function() {
+          this.props.setSelectedYear(this.props.selectedYear - 1);
+        },
+
+        switchToNextYear: function() {
+          this.props.setSelectedYear(this.props.selectedYear + 1);
+        },
+
+        render: function() {
+          return (
+            <div>
+              <div onClick={this.switchToPreviousYear}> left </div>
+              <div> {this.props.selectedYear} </div>
+              <div onClick={this.switchToNextYear}> right </div>
+            </div>
+          )
+        }
+      });
+
       var ViewMonthSelector = React.createClass({
+        getInitialState: function() {
+          return {
+            "selectedYear": this.props.year
+          };
+        },
+
+        setSelectedYear: function(selectedYear){
+          this.setState({"selectedYear": selectedYear})
+        },
+
         render: function() {
           var months = []
           for (var i=0; i<monthNamesShort.length; i++){
@@ -224,8 +257,10 @@
               <MonthLabel
                 month={i}
                 key={i}
-                selected={i==this.props.month}
+                selected={i==this.props.month && this.state.selectedYear==this.props.year}
+                selectedYear={this.state.selectedYear}
                 setViewMonth={this.props.setViewMonth}
+                setViewYear={this.props.setViewYear}
                 setSelectedView={this.props.setSelectedView}
               />
             );
@@ -233,6 +268,7 @@
           return (
             <div>
               <div> === Month === </div>
+              <YearSwitcher selectedYear={this.state.selectedYear} setSelectedYear={this.setSelectedYear}/>
               {months}
             </div>
           );
