@@ -27,12 +27,18 @@
             day: today.getDate(),
             month: today.getMonth(),
             year: today.getFullYear(),
+            viewMonth: today.getMonth(),
+            viewYear: today.getFullYear(),
             selectedView: "day"
           };
         },
 
         setSelectedView: function(view) {
           this.setState({"selectedView": view});
+        },
+
+        setSelectedDate: function(day, month, year) {
+          this.setState({"day": day, "month": month, "year": year})
         },
 
         setSelectedDay: function(day) {
@@ -47,6 +53,14 @@
           this.setState({"year": year})
         },
 
+        setViewMonth: function(month) {
+          this.setState({"viewMonth": month})
+        },
+
+        setViewYear: function(year) {
+          this.setState({"viewYear": year})
+        },
+
         render: function() {
           return (
             <div className="dateSelector">
@@ -59,24 +73,26 @@
               {
                 this.state.selectedView === "day" ?
                   <DaySelector
-                    setSelectedDay={this.setSelectedDay}
+                    setSelectedDate={this.setSelectedDate}
                     day={this.state.day}
                     month={this.state.month}
                     year={this.state.year}
+                    viewMonth={this.state.viewMonth}
+                    viewYear={this.state.viewYear}
                   /> : null
               }
               {
                 this.state.selectedView === "month" ?
                   <MonthSelector
                     month={this.state.month}
-                    setSelectedMonth={this.setSelectedMonth}
+                    setViewMonth={this.setViewMonth}
                   /> : null
               }
               {
                 this.state.selectedView === "year" ?
                   <YearSelector 
                     year={this.state.year}
-                    setSelectedYear={this.setSelectedYear}
+                    setViewYear={this.setViewYear}
                   /> : null
               }
             </div>
@@ -115,13 +131,13 @@
       });
 
       var DayLabel = React.createClass({
-        setSelectedDay: function() {
-          this.props.setSelectedDay(this.props.day)
+        setSelectedDate: function() {
+          this.props.setSelectedDate(this.props.day, this.props.month, this.props.year)
         },
 
         render: function() {
           return (
-            <div onClick={this.setSelectedDay}> {this.props.selected ? "selected" : null} {this.props.day}</div>
+            <div onClick={this.setSelectedDate}> {this.props.selected ? "selected" : null} {this.props.day}</div>
           )
         }
       })
@@ -129,12 +145,14 @@
       var DaySelector = React.createClass({
         render: function() {
           var days = []
-          for (var i=1; i<daysInMonth(this.props.month + 1, this.props.year) + 1; i++){
+          for (var i=1; i<daysInMonth(this.props.viewMonth + 1, this.props.viewYear) + 1; i++){
             days.push(
               <DayLabel
                 day={i}
-                selected={this.props.day == i}
-                setSelectedDay={this.props.setSelectedDay}
+                month={this.props.viewMonth}
+                year={this.props.viewYear}
+                selected={this.props.day == i && this.props.month == this.props.viewMonth && this.props.year == this.props.viewYear}
+                setSelectedDate={this.props.setSelectedDate}
                 key={i}
               />
             )
@@ -149,13 +167,13 @@
       });
 
       var MonthLabel = React.createClass({
-        setSelectedMonth: function() {
-          this.props.setSelectedMonth(this.props.month)
+        setViewMonth: function() {
+          this.props.setViewMonth(this.props.month)
         },
 
         render: function() {
           return (
-            <div onClick={this.setSelectedMonth}> {this.props.selected ? "selected" : null} {monthNamesShort[this.props.month]}</div>
+            <div onClick={this.setViewMonth}> {this.props.selected ? "selected" : null} {monthNamesShort[this.props.month]}</div>
           )
         }
       })
@@ -165,7 +183,7 @@
           var months = []
           for (var i=0; i<monthNamesShort.length; i++){
             months.push(
-              <MonthLabel month={i} key={i} selected={i==this.props.month} setSelectedMonth={this.props.setSelectedMonth}/>
+              <MonthLabel month={i} key={i} selected={i==this.props.month} setViewMonth={this.props.setViewMonth}/>
             );
           }
           return (
@@ -178,13 +196,13 @@
       });
 
       var YearLabel = React.createClass({
-        setSelectedYear: function() {
-          this.props.setSelectedYear(this.props.year)
+        setViewYear: function() {
+          this.props.setViewYear(this.props.year)
         },
 
         render: function() {
           return (
-            <div onClick={this.setSelectedYear}> {this.props.selected ? "selected" : null} {this.props.year}</div>
+            <div onClick={this.setViewYear}> {this.props.selected ? "selected" : null} {this.props.year}</div>
           )
         }
       })
@@ -196,7 +214,7 @@
           var startYear = Math.floor(this.props.year / yearsOnPage) * yearsOnPage;
           for (var i=startYear; i < startYear + yearsOnPage; i++){
             years.push(
-              <YearLabel year={i} key={i} selected={i==this.props.year} setSelectedYear={this.props.setSelectedYear}/>
+              <YearLabel year={i} key={i} selected={i==this.props.year} setViewYear={this.props.setViewYear}/>
             )
           }
           return (
