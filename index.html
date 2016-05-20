@@ -21,7 +21,11 @@
 
       function daysInMonth(month, year) {
         return new Date(Date.UTC(year, month + 1, 0)).getDate();
-      } 
+      }
+
+      function range(n){
+        return Array.apply(null, Array(n)).map(function (_, i) {return i;});
+      }
 
       var DateSelector = React.createClass({
         getInitialState: function() {
@@ -222,32 +226,21 @@
             )
           }
 
-          var dayNames = [];
-          for (var i=0; i<7; i++){
-            dayNames.push(
+          var dayNames = range(7).map(function(i){
+            return (
               <div className="cell dayCell daysCellHeader">
                 {dayNamesShort[i]}
               </div>
             )
-          };
+          });
 
-          var dayRows = [];
-          for (var i=0; i<days.length / 7; i++){
-            dayRows.push(
+          var dayRows = range(days.length / 7).map(function(i){
+            return (
               <div className="daysSelectorTableRow">
                 {days.slice(i * 7, (i + 1) * 7)}
               </div>
             )
-          }
-
-          var table = (
-            <div className="daysTable">
-              <div className="daysSelectorTableHeader">
-                {dayNames}
-              </div>
-              {dayRows}
-            </div>
-          )
+          });
 
           return (
             <div>
@@ -258,7 +251,12 @@
                 setViewYear={this.props.setViewYear}
                 setSelectedView={this.props.setSelectedView}
               />
-              {table}
+              <div className="daysTable">
+                <div className="daysSelectorTableHeader">
+                  {dayNames}
+                </div>
+                {dayRows}
+              </div>
             </div>
           );
         }
