@@ -14,10 +14,6 @@
       var monthNames = ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
       ];
-      var monthNamesShort = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul',
-        'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-      ];
-
       var dayNamesShort = ['Su','Mo','Tu','We','Th','Fr','Sa'];
 
       function range(n){
@@ -254,7 +250,7 @@
         if (props.selected) className += " dayCellSelected"
         return (
           <div className="cell">
-            <div onClick={setViewMonth} className={className}>{monthNamesShort[props.month]}</div>
+            <div onClick={setViewMonth} className={className}>{monthNames[props.month].slice(0, 3)}</div>
           </div>
         )
       }
@@ -298,7 +294,7 @@
 
         render: function() {
           var months = []
-          for (var i=0; i<monthNamesShort.length; i++){
+          for (var i=0; i<monthNames.length; i++){
             months.push(
               <MonthLabel
                 month={i}
