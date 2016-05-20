@@ -293,10 +293,14 @@
 
         render: function() {
           return (
-            <div>
-              <div onClick={this.switchToPreviousYear}> left </div>
-              <div onClick={this.handleYearClick}> {this.props.switcherYear} </div>
-              <div onClick={this.switchToNextYear}> right </div>
+            <div className="switcherContainer">
+              <div onClick={this.switchToPreviousYear} className="leftArrow"> &larr; </div>
+              <div onClick={this.switchToNextYear} className="rightArrow"> &rarr; </div>
+              <div className="switcherCentralContainer" onClick={this.handleYearClick}>
+                <span className="switcherButton">
+                  {this.props.switcherYear}
+                </span>
+              </div>
             </div>
           )
         }
@@ -365,10 +369,14 @@
 
         render: function() {
           return (
-            <div>
-              <div onClick={this.switchToPreviousRange}> left </div>
-              <div> {this.props.startYear} - {this.props.startYear + this.props.yearsOnPage - 1} </div>
-              <div onClick={this.switchToNextRange}> right </div>
+            <div className="switcherContainer">
+              <div onClick={this.switchToPreviousRange} className="leftArrow"> &larr; </div>
+              <div onClick={this.switchToNextRange} className="rightArrow"> &rarr; </div>
+              <div className="switcherCentralContainer">
+                <span className="switcherButton">
+                  {this.props.startYear} - {this.props.startYear + this.props.yearsOnPage - 1}
+                </span>
+              </div>
             </div>
           )
         }
