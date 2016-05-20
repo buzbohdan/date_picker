@@ -5,6 +5,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.0.2/react.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.0.2/react-dom.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
     <div id="content"></div>
@@ -15,6 +16,8 @@
       var monthNamesShort = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul',
         'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
       ];
+
+      var dayNamesShort = ['Su','Mo','Tu','We','Th','Fr','Sa'];
 
       function daysInMonth(month, year) {
         return new Date(Date.UTC(year, month + 1, 0)).getDate();
@@ -144,8 +147,11 @@
         },
 
         render: function() {
+          var className = "dayCell";
+          if (this.props.selected) className += " dayCellSelected"
+          if (this.props.otherMonth) className += " dayCellOthenMonth"
           return (
-            <div onClick={this.setSelectedDate}> {this.props.selected ? "selected" : null} {this.props.day}</div>
+            <div className="cell"><div onClick={this.setSelectedDate} className={className}>{this.props.day}</div></div>
           )
         }
       })
@@ -214,6 +220,7 @@
                 month={previousMonth}
                 year={previousYear}
                 selected={selected}
+                otherMonth={true}
                 setSelectedDate={this.props.setSelectedDate}
                 key={100 + i}
               />
@@ -233,7 +240,7 @@
             )
           }
 
-          for (var i=1; i < 7 - lastDayOfMonth.getDay(); i++){
+          for (var i=1; i<7 - lastDayOfMonth.getDay(); i++){
             day = i
             selected = (
               this.props.day == day && this.props.month == nextMonth && this.props.year == nextYear
@@ -244,11 +251,39 @@
                 month={nextMonth}
                 year={nextYear}
                 selected={selected}
+                otherMonth={true}
                 setSelectedDate={this.props.setSelectedDate}
                 key={1000 + i}
               />
             )
           }
+
+          var dayNames = [];
+          for (var i=0; i<7; i++){
+            dayNames.push(
+              <div className="cell dayCell daysCellHeader">
+                {dayNamesShort[i]}
+              </div>
+            )
+          };
+
+          var dayRows = [];
+          for (var i=0; i<days.length / 7; i++){
+            dayRows.push(
+              <div className="daysSelectorTableRow">
+                {days.slice(i * 7, (i + 1) * 7)}
+              </div>
+            )
+          }
+
+          var table = (
+            <div className="daysTable">
+              <div className="daysSelectorTableHeader">
+                {dayNames}
+              </div>
+              {dayRows}
+            </div>
+          )
 
           return (
             <div>
@@ -260,7 +295,7 @@
                 setViewYear={this.props.setViewYear}
                 setSelectedView={this.props.setSelectedView}
               />
-              {days}
+              {table}
             </div>
           );
         }

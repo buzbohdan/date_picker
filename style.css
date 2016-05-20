@@ -1,0 +1,45 @@
+.daysTable {
+	display: table;
+	background-color: #333333;
+}
+
+.cell {
+	display: table-cell;
+    text-align: center;
+}
+
+.daysSelectorTableHeader{
+	display: table-row;
+	text-align: center;
+}
+
+.dayCell {
+	padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+	color: #AAAAAA;
+}
+
+.dayCellOthenMonth {
+	color: #555555;
+}
+
+.daysCellHeader{
+	color: #FFFFFF;
+	text-transform: uppercase;
+}
+
+.dayCellSelected{
+	color: #FFFFFF;
+	background-color: #0abab5;
+}
+
+.daysSelectorTableRow
+{
+    display: table-row;
+}
