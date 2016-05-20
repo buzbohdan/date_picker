@@ -67,12 +67,6 @@
         render: function() {
           return (
             <div className="dateSelector">
-              <SelectedDateHeader
-                day={this.state.day}
-                month={this.state.month}
-                year={this.state.year}
-                setSelectedView={this.setSelectedView}
-              />
               {
                 this.state.selectedView === "day" ?
                   <DaySelector
@@ -111,36 +105,6 @@
         }
       });
 
-      var SelectedDateHeader = React.createClass({
-        handleDayClick: function(){
-          this.props.setSelectedView("day");
-        },
-
-        handleMonthClick: function(){
-          this.props.setSelectedView("month");
-        },
-
-        handleYearClick: function(){
-          this.props.setSelectedView("year");
-        },
-
-        render: function() {
-          return (
-            <div className="selectedDateHeader">
-              <div onClick={this.handleDayClick}>
-                {this.props.day}
-              </div>
-              <div onClick={this.handleMonthClick}>
-                {monthNames[this.props.month]}
-              </div>
-              <div onClick={this.handleYearClick}>
-                {this.props.year}
-              </div>
-            </div>
-          );
-        }
-      });
-
       var DayLabel = React.createClass({
         setSelectedDate: function() {
           this.props.setSelectedDate(this.props.day, this.props.month, this.props.year);
@@ -149,7 +113,7 @@
         render: function() {
           var className = "dayCell";
           if (this.props.selected) className += " dayCellSelected"
-          if (this.props.otherMonth) className += " dayCellOthenMonth"
+          if (this.props.otherMonth) className += " dayCellOtherMonth"
           return (
             <div className="cell"><div onClick={this.setSelectedDate} className={className}>{this.props.day}</div></div>
           )
@@ -287,7 +251,6 @@
 
           return (
             <div>
-              <div> === Day === </div>
               <MonthSwitcher
                 viewMonth={this.props.viewMonth}
                 viewYear={this.props.viewYear}
@@ -367,7 +330,6 @@
           }
           return (
             <div>
-              <div> === Month === </div>
               <YearSwitcher
                 switcherYear={this.state.switcherYear}
                 setSwitcherYear={this.setSwitcherYear}
@@ -441,7 +403,6 @@
           }
           return (
             <div>
-              <div> === Year === </div>
               <YearRangeSwitcher
                 startYear={this.state.startYear}
                 yearsOnPage={this.state.yearsOnPage}
