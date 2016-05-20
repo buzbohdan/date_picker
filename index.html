@@ -20,10 +20,6 @@
 
       var dayNamesShort = ['Su','Mo','Tu','We','Th','Fr','Sa'];
 
-      function daysInMonth(month, year) {
-        return new Date(Date.UTC(year, month + 1, 0)).getDate();
-      }
-
       function range(n){
         return Array.apply(null, Array(n)).map(function (_, i) {return i;});
       }
@@ -47,18 +43,6 @@
 
         setSelectedDate: function(day, month, year) {
           this.setState({"day": day, "month": month, "year": year, "viewMonth": month, "viewYear": year})
-        },
-
-        setSelectedDay: function(day) {
-          this.setState({"day": day})
-        },
-
-        setSelectedMonth: function(month) {
-          this.setState({"month": month})
-        },
-
-        setSelectedYear: function(year) {
-          this.setState({"year": year})
         },
 
         setViewMonth: function(month) {
@@ -192,7 +176,7 @@
             )
           }
 
-          for (var i=1; i<daysInMonth(this.props.viewMonth, this.props.viewYear) + 1; i++){
+          for (var i=1; i<lastDayOfMonth.getDate() + 1; i++){
             days.push(
               <DayLabel
                 day={i}
@@ -225,7 +209,7 @@
 
           var dayNames = range(7).map(function(i){
             return (
-              <div className="cell dayCell daysCellHeader">
+              <div className="cell dayCell daysCellHeader" key={i}>
                 {dayNamesShort[i]}
               </div>
             )
@@ -233,7 +217,7 @@
 
           var dayRows = range(days.length / 7).map(function(i){
             return (
-              <div className="daysSelectorTableRow">
+              <div className="daysSelectorTableRow" key={i}>
                 {days.slice(i * 7, (i + 1) * 7)}
               </div>
             )
@@ -330,7 +314,7 @@
 
           var monthRows = range(4).map(function(i){
             return (
-              <div className="daysSelectorTableRow">
+              <div className="daysSelectorTableRow" key={i}>
                 {months.slice(i * 3, (i + 1) * 3)}
               </div>
             )
@@ -423,7 +407,7 @@
           var yearRows = [];
           for (var i=0; i<this.state.yearsInColumn; i++){
             yearRows.push(
-              <div className="daysSelectorTableRow">
+              <div className="daysSelectorTableRow" key={i}>
                 {years.slice(i * this.state.yearsInRow, (i + 1) * this.state.yearsInRow)}
               </div>
             )
