@@ -1,6 +1,11 @@
+.dateSelector {
+	width: 300px;
+}
+
 .daysTable {
 	display: table;
 	background-color: #333333;
+	width: 100%;
 }
 
 .cell {
@@ -42,4 +47,35 @@
 .daysSelectorTableRow
 {
     display: table-row;
+}
+
+.switcherContainer {
+	width: 100%;
+	background-color: #888888;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.switcherCentralContainer {
+	margin: 0 auto;
+	text-align: center;
+}
+
+.switcherButton {
+	color: #ddd;
+}
+
+.leftArrow {
+	float: left;
+	width: 50px;
+	margin-left: 20px;
+	font-weight: bold;
+}
+
+.rightArrow {
+	float: right;
+	width: 50px;
+	margin-right: 20px;
+	font-weight: bold;
+	text-align: right;
 }

@@ -146,13 +146,13 @@
 
         render: function() {
           return (
-            <div>
-              <div onClick={this.switchToPreviousMonth}> left </div>
-              <div>
-                <div onClick={this.handleMonthClick}>{monthNames[this.props.viewMonth]}</div>
-                <div onClick={this.handleYearClick}>{this.props.viewYear}</div>
+            <div className="switcherContainer">
+              <div onClick={this.switchToPreviousMonth} className="leftArrow"> &larr; </div>
+              <div onClick={this.switchToNextMonth} className="rightArrow"> &rarr; </div>
+              <div className="switcherCentralContainer">
+                <span onClick={this.handleMonthClick} className="switcherButton">{monthNames[this.props.viewMonth]}</span>&nbsp;
+                <span onClick={this.handleYearClick} className="switcherButton">{this.props.viewYear}</span>
               </div>
-              <div onClick={this.switchToNextMonth}> right </div>
             </div>
           )
         }
