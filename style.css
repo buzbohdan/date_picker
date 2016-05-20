@@ -28,6 +28,11 @@
     margin-top: 5px;
     margin-bottom: 5px;
 	color: #AAAAAA;
+	cursor: default;
+}
+
+.dayCell:hover {
+	text-decoration: underline;
 }
 
 .dayCellOtherMonth {
@@ -37,6 +42,10 @@
 .daysCellHeader{
 	color: #FFFFFF;
 	text-transform: uppercase;
+}
+
+.daysCellHeader:hover{
+	text-decoration: none;
 }
 
 .dayCellSelected{
@@ -52,30 +61,50 @@
 .switcherContainer {
 	width: 100%;
 	background-color: #888888;
-	padding-top: 10px;
-	padding-bottom: 10px;
 }
 
 .switcherCentralContainer {
 	margin: 0 auto;
 	text-align: center;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.switcherLabel {
+	color: #ddd;
+	cursor: default;
 }
 
 .switcherButton {
 	color: #ddd;
+	cursor: default;
+}
+
+.switcherButton:hover {
+	text-decoration: underline;
 }
 
 .leftArrow {
+	padding: 5px;
 	float: left;
-	width: 50px;
-	margin-left: 20px;
+	margin-top: 5px;
+	margin-left: 15px;
 	font-weight: bold;
 }
 
+.leftArrow:hover {
+	background-color: #0abab5;
+}
+
 .rightArrow {
+	padding: 5px;
 	float: right;
-	width: 50px;
-	margin-right: 20px;
+	margin-top: 5px;
+	margin-right: 15px;
 	font-weight: bold;
 	text-align: right;
+}
+
+.rightArrow:hover {
+	background-color: #0abab5;
 }
