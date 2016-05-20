@@ -10,6 +10,7 @@
   <body>
     <div id="content"></div>
     <script type="text/babel">
+
       var monthNames = ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
       ];
@@ -270,8 +271,12 @@
         },
 
         render: function() {
+          var className = "dayCell";
+          if (this.props.selected) className += " dayCellSelected"
           return (
-            <div onClick={this.setViewMonth}> {this.props.selected ? "selected" : null} {monthNamesShort[this.props.month]}</div>
+            <div className="cell">
+              <div onClick={this.setViewMonth} className={className}>{monthNamesShort[this.props.month]}</div>
+            </div>
           )
         }
       })
@@ -330,6 +335,15 @@
               />
             );
           }
+
+          var monthRows = range(4).map(function(i){
+            return (
+              <div className="daysSelectorTableRow">
+                {months.slice(i * 3, (i + 1) * 3)}
+              </div>
+            )
+          });
+
           return (
             <div>
               <YearSwitcher
@@ -337,7 +351,9 @@
                 setSwitcherYear={this.setSwitcherYear}
                 setSelectedView={this.props.setSelectedView} 
               />
-              {months}
+              <div className="daysTable">
+                {monthRows}
+              </div>
             </div>
           );
         }
@@ -350,8 +366,12 @@
         },
 
         render: function() {
+          var className = "dayCell";
+          if (this.props.selected) className += " dayCellSelected"
           return (
-            <div onClick={this.setViewYear}> {this.props.selected ? "selected" : null} {this.props.year}</div>
+            <div className="cell">
+              <div onClick={this.setViewYear} className={className}>{this.props.year}</div>
+            </div>
           )
         }
       })
@@ -382,9 +402,13 @@
 
       var ViewYearSelector = React.createClass({
         getInitialState: function() {
-          var yearsOnPage = 10;
+          var yearsInRow = 4;
+          var yearsInColumn = 5;
+          var yearsOnPage = yearsInRow * yearsInColumn;
           var startYear = Math.floor(this.props.year / yearsOnPage) * yearsOnPage;
           return {
+            "yearsInRow": yearsInRow,
+            "yearsInColumn": yearsInColumn,
             "yearsOnPage": yearsOnPage,
             "startYear": startYear
           };
@@ -406,7 +430,17 @@
                 setSelectedView={this.props.setSelectedView}
               />
             )
+          };
+
+          var yearRows = [];
+          for (var i=0; i<this.state.yearsInColumn; i++){
+            yearRows.push(
+              <div className="daysSelectorTableRow">
+                {years.slice(i * this.state.yearsInRow, (i + 1) * this.state.yearsInRow)}
+              </div>
+            )
           }
+
           return (
             <div>
               <YearRangeSwitcher
@@ -414,7 +448,9 @@
                 yearsOnPage={this.state.yearsOnPage}
                 setStartYear={this.setStartYear}
               />
-              {years}
+              <div className="daysTable">
+                {yearRows}
+              </div>
             </div>
           );
         }
